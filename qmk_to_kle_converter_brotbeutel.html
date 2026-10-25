@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QMK → KLE Layout Converter</title>
+<style>
+:root{color-scheme:light;--bg:#f3f1e9;--panel:#fffefa;--ink:#172a2d;--muted:#65777a;--line:#dce0d8;--green:#344c3c;--green2:#263a30;--mint:#e7eee5;--shadow:0 8px 24px #152c2410}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 12% 0,#e0e7dc 0,transparent 34rem),var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{width:min(1440px,100%);margin:auto;padding:24px clamp(12px,2.2vw,32px) 34px}
+header{position:relative;overflow:hidden;margin-bottom:18px;padding:28px clamp(20px,3vw,42px) 24px;border-radius:18px;background:linear-gradient(118deg,#17211f,#273b32 70%,#1d2b2b);color:#f7faf6;box-shadow:0 16px 36px #17231e22}header:after{content:"";position:absolute;width:290px;height:290px;right:-70px;top:-165px;border:1px solid #ffffff17;border-radius:50%;box-shadow:0 0 0 28px #ffffff08,0 0 0 58px #ffffff05;pointer-events:none}.brandline{display:flex;justify-content:space-between;align-items:center;gap:24px;position:relative;z-index:1}.brand{display:flex;align-items:center;gap:18px;min-width:0}.brand-icon{display:grid;place-items:center;width:62px;height:62px;flex:none;border:2px solid #c9d0bd;border-radius:12px;font-size:29px;color:#e6e9dc}.brand-copy{min-width:0}h1{font-size:clamp(1.65rem,3.6vw,2.8rem);letter-spacing:-.045em;line-height:1.12;margin:0 0 8px;font-weight:780}.subtitle{max-width:750px;margin:0;color:#d3dfd8;font-size:1.02rem}.github{display:flex;flex-direction:column;gap:1px;flex:none;padding:5px 0 5px 24px;border-left:1px solid #ffffff40;color:#f8faf6;text-decoration:none;min-width:180px}.github .made{font-size:.78rem;color:#c7d5cb}.github strong{font-size:1rem}.github:hover strong{text-decoration:underline}.github .url{font-size:.83rem;color:#9ed9e9;text-underline-offset:3px;margin-top:2px;overflow-wrap:anywhere}
+.workspace{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(270px,.9fr);gap:18px;align-items:start}.maincol,.sidecol{display:grid;gap:16px;min-width:0}.panel{background:color-mix(in srgb,var(--panel) 96%,transparent);border:1px solid var(--line);border-radius:15px;padding:clamp(16px,2vw,22px);box-shadow:var(--shadow);min-width:0}.section-head{display:flex;align-items:center;gap:11px;margin-bottom:16px}.section-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--green);color:white;font-size:18px;flex:none}.section-head h2{font-size:1.15rem;letter-spacing:-.02em;margin:0}h2{font-size:1.08rem;margin:0 0 12px}p{margin-top:0}.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.row>*{min-width:0}button,.filelabel{border:1px solid #cbd3ca;background:#fffefa;color:var(--ink);border-radius:10px;padding:10px 14px;font:inherit;font-weight:650;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;min-height:42px}button:hover,.filelabel:hover{border-color:#809582;background:#f0f5ef}button:active,.filelabel:active{transform:translateY(1px)}button:focus-visible,.filelabel:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #8ba88b;outline-offset:3px}button.primary{background:var(--green);color:white;border-color:var(--green)}button.primary:hover{background:var(--green2)}button:disabled{opacity:.45;cursor:not-allowed}.filelabel{display:inline-flex;align-items:center;gap:8px}input[type=file]{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap}
+.dropzone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;min-height:190px;margin-top:14px;padding:24px;border:1.5px dashed #b8c2b6;border-radius:13px;background:linear-gradient(145deg,#fafbf7,#f4f5ef);cursor:pointer;transition:border-color .18s,background .18s,transform .18s}.dropzone:hover,.dropzone:focus-visible,.dropzone.dragover{border-color:#54765d;background:#edf3e9}.dropzone.dragover{transform:scale(1.005)}.drop-icon{font-size:38px;line-height:1;color:#29463a}.drop-title{font-size:1.02rem;font-weight:750}.drop-sub{color:var(--muted)}.file-name{font-size:.87rem;color:var(--green);font-weight:650;overflow-wrap:anywhere}.hint{font-size:.9rem;color:var(--muted);margin:11px 0 0}.text-toggle{margin-top:13px}.text-toggle summary{cursor:pointer;color:var(--green);font-weight:700;text-underline-offset:3px}.text-toggle[open] summary{margin-bottom:8px}textarea{display:block;width:100%;min-height:230px;resize:vertical;margin-top:10px;background:#fbfcf9;color:var(--ink);border:1px solid #cfd7ce;border-radius:11px;padding:13px;font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;box-shadow:inset 0 1px 2px #1b2a2010}.options{display:flex;gap:12px 22px;flex-wrap:wrap;margin:16px 0;padding:13px;background:#f5f6f1;border:1px solid #e4e8df;border-radius:11px}.check{display:flex;align-items:flex-start;gap:9px;line-height:1.4}.check input{margin-top:4px;accent-color:var(--green)}.convert-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.convert-row .primary{min-width:190px}.status{display:block;width:100%;min-width:0;margin-top:14px;padding:12px 14px;border:1px solid #d8e3d5;border-radius:11px;background:var(--mint);color:#2d4935;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}.status:empty{display:none}.status.error{background:#fbebeb;border-color:#efcece;color:#8c3434}.results{display:grid;grid-template-columns:1fr;gap:10px;align-items:stretch}.result{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:center;min-width:0;border:1px solid var(--line);border-radius:12px;padding:14px;background:linear-gradient(145deg,#fffefa,#f8f9f5)}.result-info{min-width:0}.result strong{display:block;font-size:1rem;line-height:1.35;overflow-wrap:anywhere}.result .meta{font-size:.88rem;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}.result-actions{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}.result-actions button{font-size:.87rem;padding:8px 11px;min-height:37px}.result .download{background:var(--green);color:#fff;border-color:var(--green)}.result .download:hover{background:var(--green2)}.actions-row{margin-top:14px}.actions-row button{flex:1 1 190px}.divider{height:1px;background:var(--line);margin:17px 0}.side-card{padding:18px}.side-card h2{display:flex;align-items:center;gap:9px}.code-card{background:linear-gradient(135deg,#1a2623,#2b3c32);color:#f4f8f3;border-radius:12px;padding:18px}.code-card h2{margin-bottom:13px}.code-sample{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;background:#111a1c;border:1px solid #6b7b73;border-radius:10px;padding:15px;color:#e1e9dc;font:13px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}.checklist{display:grid;gap:10px;padding:16px 4px 2px}.checkline{display:flex;gap:10px;align-items:flex-start;color:#40585a;font-size:.92rem}.checkline span:first-child{color:#345747;font-weight:800}.tip{margin-top:16px;padding:13px;border:1px solid #dce2d8;border-radius:11px;background:#f4f5ef;color:#4b6263;font-size:.9rem}.community{background:linear-gradient(120deg,#17211f,#273b32);color:#f7faf6;border-radius:14px;padding:20px}.community p{font-size:.92rem;color:#d2ded6;margin:8px 0 12px}.community a{color:#9ed9e9;text-underline-offset:3px;overflow-wrap:anywhere}footer{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:.88rem;color:var(--muted);margin-top:20px;padding:4px 2px}footer a{color:var(--green);font-weight:700;text-underline-offset:3px}
+@media(max-width:900px){.workspace{grid-template-columns:1fr}.sidecol{grid-template-columns:repeat(2,minmax(0,1fr))}.community{grid-column:1/-1}}@media(max-width:620px){main{padding:12px 10px 26px}header{padding:21px 17px;border-radius:14px}.brandline{display:block}.brand{align-items:flex-start;gap:12px}.brand-icon{width:45px;height:45px;font-size:22px}.github{margin:17px 0 0;padding:10px 0 0;border-left:0;border-top:1px solid #ffffff30;min-width:0}.panel{padding:15px}.row{align-items:stretch}.row button,.row .filelabel{flex:1 1 auto;justify-content:center}.dropzone{min-height:160px;padding:18px 12px}.options{display:grid;gap:12px}.results{grid-template-columns:1fr}.result{grid-template-columns:1fr}.result-actions{justify-content:flex-start}.sidecol{grid-template-columns:1fr}.convert-row .primary{width:100%}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="brandline">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">⌨</div>
+        <div class="brand-copy">
+          <h1>QMK → KLE Layout Converter</h1>
+          <p class="subtitle">Konvertiere deine QMK-JSON-Datei in das Raw-Format des <b>Keyboard Layout Editors</b>.</p>
+        </div>
+      </div>
+      <a class="github" href="https://github.com/Brotbeutel" target="_blank" rel="noopener noreferrer" aria-label="Brotbeutel auf GitHub öffnen"><span class="made">Made by</span><strong>⌘ Brotbeutel</strong><span class="url">github.com/Brotbeutel ↗</span></a>
+    </div>
+  </header>
+  <div class="workspace">
+    <div class="maincol">
+      <section class="panel">
+        <div class="section-head"><span class="section-icon" aria-hidden="true">↥</span><h2>QMK-JSON importieren</h2></div>
+        <div class="row">
+          <label class="filelabel" for="file">▣ JSON-Datei auswählen</label>
+          <input id="file" type="file" accept=".json,application/json">
+          <button id="clear">Eingabe leeren</button>
+        </div>
+        <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="keyboard.json oder info.json auswählen oder hier ablegen">
+          <div class="drop-icon" aria-hidden="true">☁</div>
+          <div class="drop-title">keyboard.json oder info.json hier ablegen</div>
+          <div class="drop-sub">oder klicken, um eine Datei auszuwählen</div>
+          <div id="fileName" class="file-name">Unterstützt: keyboard.json und info.json</div>
+        </div>
+        <details class="text-toggle" id="pasteDetails">
+          <summary>Oder JSON-Text direkt einfügen</summary>
+          <textarea id="source" spellcheck="false" placeholder="Inhalt von keyboard.json oder info.json hier einfügen …"></textarea>
+        </details>
+        <p class="hint">Verwende eine QMK-Datei namens <code>keyboard.json</code> oder <code>info.json</code>.</p>
+        <div class="options">
+          <label class="check"><input id="includeRgb" type="checkbox" checked> RGB-Matrix als separates Marker-Layout erzeugen</label>
+          <label class="check"><input id="legendMatrix" type="checkbox"> Matrixposition in Tastenbeschriftung ergänzen</label>
+        </div>
+        <div class="convert-row"><button id="convert" class="primary">Layouts konvertieren →</button></div>
+        <div id="status" class="status" role="status" aria-live="polite">Bereit – lade keyboard.json oder info.json.</div>
+      </section>
+      <section class="panel">
+        <div class="section-head"><span class="section-icon" aria-hidden="true">▦</span><h2>Erkannte Layouts</h2></div>
+        <div id="results" class="results"><p class="hint">Deine konvertierten Layouts erscheinen hier.</p></div>
+        <div class="row actions-row">
+          <button id="zip" class="primary" disabled>↓ Alle Dateien als ZIP herunterladen</button>
+          <button id="allJson" disabled>Sammeldatei herunterladen</button>
+        </div>
+        <p class="hint">Einzeldateien sind KLE-Raw-Inhalte ohne äußere eckige Klammern. Importiere sie im Keyboard Layout Editor über „Raw data“.</p>
+      </section>
+    </div>
+    <aside class="sidecol">
+      <section class="panel side-card">
+        <div class="code-card">
+          <h2>▣ Ausgabeformat</h2>
+          <pre class="code-sample">{
+  "name": "LAYOUT_68_iso"
+},
+[
+  "Esc", "1", "2", "3", ...
+]</pre>
+        </div>
+        <div class="checklist">
+          <div class="checkline"><span>✓</span><span>KLE-Raw-Format ohne äußere Klammern</span></div>
+          <div class="checkline"><span>✓</span><span>Eigene Datei für jedes Layout</span></div>
+          <div class="checkline"><span>✓</span><span>RGB-Marker können separat exportiert werden</span></div>
+        </div>
+        <div class="tip"><strong>💡 Tipp</strong><br>Öffne <a href="https://www.keyboard-layout-editor.com/" target="_blank" rel="noopener noreferrer">Keyboard Layout Editor</a>, wechsle zu „Raw data“ und füge den Inhalt einer erzeugten Datei ein.</div>
+      </section>
+      <section class="community">
+        <h2>⌘ Open Source &amp; Community</h2>
+        <p>Feedback, Ideen oder Verbesserungsvorschläge? Schau auf GitHub vorbei.</p>
+        <a href="https://github.com/Brotbeutel" target="_blank" rel="noopener noreferrer">github.com/Brotbeutel ↗</a>
+      </section>
+    </aside>
+  </div>
+  <footer><span>QMK → KLE Layout Converter</span><span>Made by <a href="https://github.com/Brotbeutel" target="_blank" rel="noopener noreferrer">Brotbeutel on GitHub ↗</a></span></footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let outputs=[];
+function setStatus(msg,error=false){const el=$('status');el.textContent=msg;el.classList.toggle('error',error)}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function kleRaw(data){const json=JSON.stringify(data,null,2);return json.startsWith('[')&&json.endsWith(']')?json.slice(1,-1).trim():json}
+function download(name,content,type='application/json'){
+ const blob=new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)
+}
+function slug(s){return String(s).replace(/[^a-z0-9_-]+/gi,'_').replace(/^_+|_+$/g,'')||'layout'}
+function isNum(n){return typeof n==='number'&&Number.isFinite(n)}
+function keyFromQmk(item,opts={}){
+ const matrixLabel=Array.isArray(item.matrix)?item.matrix.join(','):'';
+ const label=Array.isArray(item)?'':(item.label??item.name??(matrixLabel?`[${matrixLabel}]`:''));
+ const w=isNum(item.w)?item.w:1, h=isNum(item.h)?item.h:1;
+ const x=isNum(item.x)?item.x:0, y=isNum(item.y)?item.y:0;
+ const props={};
+ if(x!==0)props.x=x;
+ if(y!==0)props.y=y;
+ if(w!==1)props.w=w;
+ if(h!==1)props.h=h;
+ let text=String(label);
+ if(opts.legendMatrix&&Array.isArray(item.matrix)) text=(text?text+'\n':'')+`[${item.matrix.join(',')}]`;
+ return Object.keys(props).length?[props,text]:text;
+}
+function convertLayout(name,layout,opts){
+ if(!Array.isArray(layout))throw new Error(`Layout „${name}“ enthält kein Array namens layout.`);
+ // KLE Raw data is an outer array of ROW arrays. Each key with properties is
+ // represented as [properties, label] inside its row.
+ const sorted=layout.map((k,i)=>({...k,__i:i})).sort((a,b)=>(Number(a.y)||0)-(Number(b.y)||0)||(Number(a.x)||0)-(Number(b.x)||0)||a.__i-b.__i);
+ const groups=[];let group=[],currentY=null;
+ for(const k of sorted){
+  const y=isNum(k.y)?k.y:0;
+  if(currentY===null||Math.abs(y-currentY)>0.001){if(group.length)groups.push({y:currentY,keys:group});group=[];currentY=y;}
+  group.push(k);
+ }
+ if(group.length)groups.push({y:currentY,keys:group});
+ const out=[{name:`${opts.keyboardName||'QMK Keyboard'} — ${name}`}];
+ let previousRowY=0;
+ groups.forEach((g,rowIndex)=>{
+  const row=[];let previousRight=0;
+  g.keys.forEach((k,index)=>{
+   const x=isNum(k.x)?k.x:0,y=isNum(k.y)?k.y:g.y,w=isNum(k.w)?k.w:1,h=isNum(k.h)?k.h:1;
+   const props={};
+   // KLE x is an offset from the previous key's right edge; y is an offset
+   // from the implicit row position (one unit lower than the previous row).
+   const dx=index===0?x:x-previousRight;
+   if(Math.abs(dx)>0.001)props.x=Number(dx.toFixed(4));
+   const dy=rowIndex===0?y:y-previousRowY-1;
+   if(index===0&&Math.abs(dy)>0.001)props.y=Number(dy.toFixed(4));
+   if(Math.abs(w-1)>0.001)props.w=w;
+   if(Math.abs(h-1)>0.001)props.h=h;
+   const labelValue=String(k.label??k.name??(Array.isArray(k.matrix)?`[${k.matrix.join(',')}]`:''));
+   // KLE ISO-Enter uses a two-part cap outline. QMK commonly encodes it as w=1.25,h=2.
+   if(Math.abs(w-1.25)<0.001&&Math.abs(h-2)<0.001){props.w2=1.5;props.h2=1;props.x2=-0.25;}
+   let label=labelValue;
+   if(opts.legendMatrix&&k.label&&Array.isArray(k.matrix))label+=(label?'\n':'')+`[${k.matrix.join(',')}]`;
+   if(Object.keys(props).length)row.push(props);
+   row.push(label);
+   previousRight=x+w;
+  });
+  out.push(row);
+  previousRowY=g.y;
+ });
+ return out;
+}
+function convertRgb(rgb,layouts,opts){
+ if(!Array.isArray(rgb))throw new Error('rgb_matrix.layout ist kein Array.');
+ // RGB-Matrix x/y sind elektrische Matrix-/LED-Koordinaten, nicht KLE-Positionen.
+ // Die physische Position wird ausschließlich über matrix [row, col] aus dem
+ // passenden QMK-Tastenlayout übernommen.
+ const candidates=Object.entries(layouts||{}).filter(([,v])=>v&&Array.isArray(v.layout));
+ let physicalLayout=null,physicalName='';
+ for(const [name,obj] of candidates){
+  const map=new Map(obj.layout.filter(k=>Array.isArray(k.matrix)).map(k=>[k.matrix.join(','),k]));
+  const matches=rgb.filter(p=>Array.isArray(p.matrix)&&map.has(p.matrix.join(','))).length;
+  const score=matches*1000-Math.abs(obj.layout.length-rgb.length);
+  if(!physicalLayout||score>physicalLayout.score)physicalLayout={map,matches,layout:obj.layout,score,name};
+ }
+ if(!physicalLayout||physicalLayout.matches===0)throw new Error('RGB-Matrix kann keiner physischen Tastenposition zugeordnet werden.');
+ physicalName=physicalLayout.name;
+ const mapped=[];
+ for(const p of rgb){
+  if(!Array.isArray(p.matrix))continue;
+  const key=physicalLayout.map.get(p.matrix.join(','));
+  if(!key)continue;
+  const electricalX=isNum(p.x)?p.x:'?',electricalY=isNum(p.y)?p.y:'?';
+  const flags=isNum(p.flags)?p.flags:'?';
+  mapped.push({...key,label:`${electricalX},${electricalY}\nflags:${flags}`,__isoEnter:String(key.label??'').toLowerCase()==='enter'});
+ }
+ if(!mapped.length)throw new Error('Keine RGB-LEDs konnten auf physische Tasten gemappt werden.');
+ const result=convertLayout('RGB Matrix LED positions',mapped,{...opts,keyboardName:'RGB Matrix'});
+ result[0]={name:'RGB Matrix LED positions',notes:`Elektrische x/y und flags; physische Positionen aus QMK matrix (${physicalName||'Tastenlayout'}).`};
+ return result;
+}
+function parseInput(){
+ let raw=$('source').value.trim();if(!raw)throw new Error('Bitte eine JSON-Datei laden oder JSON einfügen.');
+ try{return JSON.parse(raw)}catch(e){throw new Error('JSON konnte nicht gelesen werden: '+e.message)}
+}
+function buildOutputs(data){
+ const out=[];
+ if(!data||typeof data!=='object')throw new Error('Die JSON-Wurzel muss ein Objekt sein.');
+ const layouts=data.layouts;
+ if(layouts&&typeof layouts==='object'){
+  for(const [name,layoutObj] of Object.entries(layouts)){
+   if(!layoutObj||!Array.isArray(layoutObj.layout))continue;
+   const kle=convertLayout(name,layoutObj.layout,{legendMatrix:$('legendMatrix').checked,keyboardName:data.keyboard_name||'QMK Keyboard'});
+   out.push({name:`${slug(name)}.json`,title:name,kind:'Tastenlayout',count:layoutObj.layout.length,data:kle});
+  }
+ }
+ if($('includeRgb').checked&&data.rgb_matrix&&Array.isArray(data.rgb_matrix.layout)){
+  const rgb=convertRgb(data.rgb_matrix.layout, data.layouts, {legendMatrix:false});
+  rgb[0]={name:'Lucky65V2 — RGB Matrix LED Layout',notes:'Vereinfachte Visualisierung der RGB-LED-Koordinaten; keine Tastenkappen-Geometrie.'};
+  out.push({name:'RGB_MATRIX_LED_LAYOUT.json',title:'rgb_matrix.layout',kind:'RGB-LED-Marker',count:data.rgb_matrix.layout.length,data:rgb});
+ }
+ if(!out.length)throw new Error('Keine unterstützten Layouts gefunden. Erwartet wird layouts.<NAME>.layout und/oder rgb_matrix.layout.');
+ return out;
+}
+function renderResults(){
+ const root=$('results');root.innerHTML='';
+ for(const o of outputs){
+  const div=document.createElement('div');div.className='result';
+  div.innerHTML=`<strong>${esc(o.title)}</strong><div class="meta">${esc(o.kind)} · ${o.count} Elemente<br><small>${esc(o.name)}</small></div><div class="result-actions"><button class="download">↓ JSON herunterladen</button><button class="preview">Vorschau</button></div>`;
+  div.querySelector('.download').onclick=()=>download(o.name,kleRaw(o.data));
+  div.querySelector('.preview').onclick=()=>{ $('source').value=kleRaw(o.data);window.scrollTo({top:0,behavior:'smooth'});setStatus(`Vorschau: ${o.name} in den Editor geladen. Ursprungsdatei ist damit im Textfeld ersetzt.`)};
+  root.append(div);
+ }
+ $('zip').disabled=!outputs.length;$('allJson').disabled=!outputs.length;
+}
+async function loadFile(f){if(!f)return;const accepted=['keyboard.json','info.json'];if(!accepted.includes(f.name.toLowerCase())){setStatus(`„${f.name}“ ist kein erwarteter Dateiname. Bitte keyboard.json oder info.json verwenden.`,true);return}try{$('source').value=await f.text();$('fileName').textContent=`✓ ${f.name} · ${f.size.toLocaleString()} Bytes`;$('pasteDetails').open=false;setStatus(`Datei geladen: ${f.name}. Klicke auf „Layouts konvertieren“.`)}catch(err){setStatus('Datei konnte nicht gelesen werden: '+err.message,true)}}
+$('file').addEventListener('change',async e=>{await loadFile(e.target.files?.[0]);e.target.value=''});
+const drop=$('dropzone');drop.addEventListener('click',()=> $('file').click());drop.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('file').click()}});['dragenter','dragover'].forEach(type=>drop.addEventListener(type,e=>{e.preventDefault();e.stopPropagation();drop.classList.add('dragover')}));['dragleave','drop'].forEach(type=>drop.addEventListener(type,e=>{e.preventDefault();e.stopPropagation();drop.classList.remove('dragover')}));drop.addEventListener('drop',async e=>{const f=e.dataTransfer?.files?.[0];await loadFile(f)});
+$('clear').onclick=()=>{$('source').value='';$('fileName').textContent='Unterstützt: keyboard.json und info.json';outputs=[];renderResults();setStatus('Eingabe geleert.')};
+$('convert').onclick=()=>{try{const data=parseInput();outputs=buildOutputs(data);renderResults();setStatus(`${outputs.length} Layout(s) erzeugt:\n`+outputs.map(o=>`• ${o.name} — ${o.count} Elemente`).join('\n'))}catch(e){outputs=[];renderResults();setStatus(e.message,true)}};
+$('allJson').onclick=()=>download('KLE_Layouts_Sammlung.json',JSON.stringify(Object.fromEntries(outputs.map(o=>[o.name,o.data])),null,2));
+// ZIP store implementation, supports UTF-8 filenames and CRC32.
+function crc32(bytes){let c=-1;for(const b of bytes){c^=b;for(let k=0;k<8;k++)c=(c>>>1)^((c&1)?0xEDB88320:0)}return(c^-1)>>>0}
+function u16(n){return [n&255,(n>>>8)&255]}function u32(n){return [n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255]}
+function makeZip(files){
+ const enc=new TextEncoder(),local=[],central=[];let offset=0;
+ for(const f of files){
+  const name=enc.encode(f.name),data=enc.encode(kleRaw(f.data)),crc=crc32(data);
+  const lh=[0x50,0x4b,3,4,...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(name.length),...u16(0),...name,...data];
+  local.push(new Uint8Array(lh));
+  const ch=[0x50,0x4b,1,2,...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(name.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset),...name];
+  central.push(new Uint8Array(ch));offset+=lh.length;
+ }
+ const centralSize=central.reduce((n,a)=>n+a.length,0),end=new Uint8Array([0x50,0x4b,5,6,...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(centralSize),...u32(offset),...u16(0)]);
+ return new Blob([...local,...central,end],{type:'application/zip'});
+}
+$('zip').onclick=()=>{if(!outputs.length)return;const blob=makeZip(outputs);const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='KLE_Layouts.zip';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+</script>
+</body>
+</html>
